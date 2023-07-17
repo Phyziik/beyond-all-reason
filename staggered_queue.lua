@@ -1,7 +1,7 @@
 function widget:GetInfo()
   return {
       name = "Staggered Queue",
-      desc = "When buildings are queued, the constructor will start each building for 5 seconds then move on to the next in the queue.",
+      desc = "When buildings are queued, the constructor will start each building for 1 second then move on to the next in the queue.",
       author = "Phyziik",
       date = "2023-06-06",
       license = 'GNU GPL, v2 or later',
@@ -27,7 +27,7 @@ function widget:KeyPress(key, modifier, isRepeat)
   if (modifier.shift and modifier.ctrl and modifier.alt and key == 115) or
       (modifier.shift and modifier.alt and key == 115) then
       stagger = not stagger
-      //Spring.Echo("Stagger Mode:" .. tostring(stagger))
+      Spring.Echo("Stagger Mode:" .. tostring(stagger))
       return true
   end
   return false
@@ -60,7 +60,7 @@ for i = 1, #myUnits do
                     local buildProgress = select(1, Spring.GetUnitHealth(currentBuilding))
                     if buildProgress > unitLastBuildProgress[unitID] then -- Unit has been actively building since last frame
                         unitLastBuildProgress[unitID] = buildProgress
-                        if n - unitWorkTimes[unitID] >= 30 * 1 and #commands > 1 then -- 0.25 seconds
+                        if n - unitWorkTimes[unitID] >= 30 * 1 and #commands > 1 then -- 1 second
                             spGiveOrderToUnit(unitID, CMD.REMOVE, {commands[1].tag}, {"ctrl"})
                             unitCurrentCommands[unitID] = nil
                             //Spring.Echo("Unit " .. unitID .. " moving to next building in the queue: " .. currentBuilding)
